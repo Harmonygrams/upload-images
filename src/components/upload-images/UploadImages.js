@@ -1,41 +1,29 @@
 import { useState } from 'react'
-import uploadImages from '../../utils/uploadImages'
-const UploadImages = () => {
-    const [selectedImage, setSelectedImage] = useState(null)
-    const sumitImageData = (e) => {
+import uploadImages from "../../utils/uploadImages"
+const UploadImage = () => {
+    const [file, setFile] = useState('')
+    const updateForm = (e) => {
+        setFile(e.target.files[0])
+    }
+    const submitForm = (e) => {
         e.preventDefault()
-        uploadImages(selectedImage)
+        const form = document.querySelector("#file")
+        const formData = new FormData()
+        formData.set('file', file)
+        uploadImages(formData)
     }
     return(
         <div>
-            <h1> Upload and display images </h1>
-            {selectedImage && 
-            <div> 
-                <img 
-                    alt="not found" 
-                    width={"250px"}
-                    src={URL.createObjectURL(selectedImage)}
+            <form id="form-data" onSubmit = {submitForm}> 
+                <input 
+                    type = "file" 
+                    name = "file"
+                    id = "file"
+                    onChange = {updateForm}
                 />
-            </div> 
-            }
-            <br /> 
-            <br /> 
-            <form
-                onSubmit={sumitImageData}
-            > 
-                <p> Upload images </p>
-                <input  
-                    type={"file"}
-                    name={"myImage"}
-                    multiple = {true}
-                    onChange = {(event) => {
-                        const file = event.target.files[0]
-                        setSelectedImage(file)
-                    }}
-                />
-                <button type={"submit"}> Submit </button>
+                <button type="submit"> Submit </button>
             </form>
-        </div> 
+        </div>
     )
 }
-export default UploadImages
+export default UploadImage

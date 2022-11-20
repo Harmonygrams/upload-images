@@ -1,11 +1,11 @@
 import axios from 'axios'
-const uploadImages = (selectedFile) => {
+const uploadImages = (formData) => {
     axios({
-        url : 'http://localhost:5000/uploads', 
-        method : 'POST', 
-        data : selectedFile,
+        data : formData,
+        method : 'post', 
+        url : 'http://localhost:5001/uploads',
     }). 
-    then(response => console.log(response)).
+    then(response => console.log(response)). 
     catch(err => console.log(err))
 }
 export default uploadImages
